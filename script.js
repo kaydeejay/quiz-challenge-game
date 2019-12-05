@@ -1,3 +1,12 @@
+var startScreen = document.querySelector(".start-screen");
+var highScores = document.querySelector(".high-scores");
+var quizPage = document.querySelector(".quiz-page");
+var endScreen = document.querySelector(".end-screen");
+var timer = 10000;
+var questionTitle = document.querySelector("#question");
+var multipleChoice = document.querySelector("#multipleChoice");
+
+
 var questions = [
     {
         title: "Descendant of Isildur and rightful heir to the Thrones of Arnor and Gondor:",
@@ -31,66 +40,25 @@ var questions = [
     }
 ];
 
-var gameScreens = [
-    {
-        id: "startScreen",
-        title: "Lord of the Rings: Name That Character!",
-        content: "Can you guess the character based on the description?",
-        buttons: ["Start!", "High Scores"],
-        buttonFunctions: ["startGame()", "showHighScores()"]
-    },
-    {
-        id: "highScores",
-        title: "High Scores",
-        content: "",
-        buttons: ["Back", "Clear High Scores"],
-        buttonFunctions: [];
-    },
-    {
-        id: "scoreCard",
-        title: "Results!",
-        content: "",
-        buttons: ["Enter Your Score", "Start Over"],
-        buttonFunctions: [];
-    }
-];
-
-var card = document.querySelector("#cardBody");
-var cardTitle = document.querySelector(".card-title");
-var cardText = document.querySelector(".card-text");
-var buttonField = document.querySelector("#buttonField");
-
-//for changing between menu pages, NOT game question pages!
-//right now this is hardcoded to open the startScreen. How can I make it dynamically
-//pick the desired screen?
-function changeCard(id){
-    var gsIndex = 0;
-    for (var i = 0; i < gameScreens.length; i++) {
-        // if the object at index i contains an id that matches the argument passed in, 
-        // gsIndex = i.
-        // then run a function that builds a new page with the index of the object i 
-        // in gameScreens. 
-    }
-
-    // cardTitle.textContent = gameScreens[0].title;
-    // cardText.textContent = gameScreens[0].content;
-    // for (var i = 0; i < gameScreens[0].buttons.length; i++){
-    //     var newButton = document.createElement("a");
-    //     newButton.setAttribute("class", "btn btn-primary");
-    //     newButton.setAttribute("id", "button-" + i);
-    //     newButton.setAttribute("onclick", gameScreens[0].buttonFunctions[i])
-    //     newButton.innerHTML = gameScreens[0].buttons[i];
-    //     buttonField.appendChild(newButton);
-    // }
+function endGame(){
+    alert("Game over");
+    clearInterval(startTimer);
 }
 
-//
-function startGame(){}
+function countdown(){
+    timer -= 1000;
+    if (timer === 0){
+        // skip straight to end screen, score = 0
+        endGame();
+    }
+    document.getElementById("timer").textContent = "Time Remaining: " + (timer/1000);
+}
 
-function showHighScores(){}
+function startGame(){
+    //start timer
+    document.getElementById("timer").textContent = "Time Remaining: " + (timer/1000);
+    var startTimer = setInterval(countdown, 1000);
+    startScreen.setAttribute("style", "display: none");
+    quizPage.setAttribute("style","display: block;");    
+}
 
-function nextQuestion(){}
-
-// when the user first arrives at the page,
-// they are greeted with the "start screen"
-    // start screen gets built with the beginGame function, declared onload.

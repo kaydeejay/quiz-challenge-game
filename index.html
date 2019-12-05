@@ -8,17 +8,57 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
 </head>
-<body onload="changeCard()">
+<body>
     
     <div class="container-fluid">
 
-        <div class="card">
-            <div id="cardBody" class="card-body">
-                <h5 class="card-title"></h5>
-                <p class="card-text"></p>
-                <div id="buttonField">
-                  <!-- <a class="btn btn-primary" onclick="changeCard()">Start!</a>
-                  <a class="btn btn-primary" onclick="showHighScores()">High Scores</a> -->
+        <div class="start-screen">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Lord of the Rings: Name That Character!</h5>
+                    <div>Can you guess the character based on the description?</div>
+                    <div class="button-field"">
+                      <button class="btn btn-primary" onclick="startGame()">Start!</button>
+                      <button class="btn btn-primary" onclick="showHighScores()">High Scores</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="high-scores">
+            <div class="card">
+                <div class="card-body">
+                    <h5>High Scores:</h5>
+                    <div id="highScores">
+                        <ul id="scoresList"></ul>
+                    </div>
+                    <div class="button-field">
+                        <button class="btn btn-primary" onclick="showStartScreen()">Back</button>
+                        <button class="btn btn-primary" onclick="clearHighScores()">Clear High Scores</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-page">
+            <div class="card">
+                <div class="card-body">
+                    <div id="timer"></div>
+                    <h5 id="question"></h5>
+                    <div id="multipleChoice"></div>
+                    <div id="showResult"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="end-screen">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Your Score: <span id="userScoreEl"></span></h5>
+                    <div class="button-field">
+                        <button class="btn btn-primary" onclick="logScore()">Save Score</button>
+                        <button class="btn btn-primary" onclick="showStartScreen()">Back</button>
+                    </div>
                 </div>
             </div>
         </div>
