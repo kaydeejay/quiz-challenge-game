@@ -43,9 +43,10 @@ var questions = [
     }
 ];
 
-document.getElementById("startGameButton").addEventListener("click", startGame);
+document.getElementById("startGameButton").addEventListener("click", startGame());
 
 function startGame(){
+    // event.stopPropagation();
     //hide startscreen and show quiz card
     startScreen.setAttribute("style", "display: none;");
     highScores.setAttribute("style", "display: none;");
@@ -54,11 +55,10 @@ function startGame(){
     timerStart = setInterval(countdown, 1000);
     questionIndex = 0;
     // next question function here. 
-    // nextQuestion(questionIndex);
+    nextQuestion(questionIndex);
 }
 
 function countdown(){
-    console.log("test " + timeRemaining);
     if (timeRemaining === 0) {
         clearInterval(timerStart);
         // endGame function here!
@@ -67,6 +67,26 @@ function countdown(){
     timeRemaining -= 1000;
 }
 
+function nextQuestion(num){
+    var currentQuestion = questions[num];
+    questionTitle.textContent = currentQuestion.title;
+    // generate buttons 
+    for (var i = 0; i < currentQuestion.choices.length; i++){
+        var ansButton = document.createElement("button");
+        ansButton.textContent = questions[num].choices[i];
+        ansButton.setAttribute("class", "btn btn-primary");
+        ansButton.setAttribute("data-index", "i");
+        multipleChoice.append(ansButton);
+    }
+    // multipleChoice.addEventListener("click", gradeQuest());
+}
+
+// function gradeQuest(){
+    // event.stopPropagation();
+    // event.preventDefault();
+    // var userAnswer = event.target;
+    // console.log(userAnswer);
+// }
 
 
 
