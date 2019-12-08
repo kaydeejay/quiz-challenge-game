@@ -2,9 +2,12 @@ var startScreen = document.querySelector(".start-screen");
 var highScores = document.querySelector(".high-scores");
 var quizPage = document.querySelector(".quiz-page");
 var endScreen = document.querySelector(".end-screen");
-var timer = 10000;
 var questionTitle = document.querySelector("#question");
 var multipleChoice = document.querySelector("#multipleChoice");
+var timeRemaining = 60000;
+var timerEl = document.getElementById("timer");
+var timerStart;
+var questionIndex = 0;
 
 
 var questions = [
@@ -40,7 +43,36 @@ var questions = [
     }
 ];
 
-function endGame(){
+document.getElementById("startGameButton").addEventListener("click", startGame);
+
+function startGame(){
+    //hide startscreen and show quiz card
+    startScreen.setAttribute("style", "display: none;");
+    highScores.setAttribute("style", "display: none;");
+    endScreen.setAttribute("style", "display: none;");
+    quizPage.setAttribute("style", "display: block;");
+    timerStart = setInterval(countdown, 1000);
+    questionIndex = 0;
+    // next question function here. 
+    // nextQuestion(questionIndex);
+}
+
+function countdown(){
+    console.log("test " + timeRemaining);
+    if (timeRemaining === 0) {
+        clearInterval(timerStart);
+        // endGame function here!
+    } 
+    timerEl.textContent = "Time Remaining: " + (timeRemaining/1000);
+    timeRemaining -= 1000;
+}
+
+
+
+
+
+
+/*function endGame(){
     alert("Game over");
     clearInterval(startTimer);
 }
@@ -50,6 +82,7 @@ function countdown(){
     if (timer === 0){
         // skip straight to end screen, score = 0
         endGame();
+        clearInterval(startTimer);
     }
     document.getElementById("timer").textContent = "Time Remaining: " + (timer/1000);
 }
@@ -61,4 +94,4 @@ function startGame(){
     startScreen.setAttribute("style", "display: none");
     quizPage.setAttribute("style","display: block;");    
 }
-
+*/
