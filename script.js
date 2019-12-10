@@ -43,8 +43,6 @@ var questions = [
     }
 ];
 
-document.getElementById("startGameButton").addEventListener("click", startGame);
-
 function startGame(){
     startScreen.setAttribute("style", "display: none;");
     highScores.setAttribute("style", "display: none;");
@@ -57,11 +55,16 @@ function startGame(){
 }
 
 function endGame(){
-    var finalScore = timeRemaining;
     clearInterval(timerStart);
+    var finalScore = timeRemaining;
     timeRemaining = 60000;
     questionIndex = 0;
-    return finalScore;
+    startScreen.setAttribute("style", "display: none;");
+    highScores.setAttribute("style", "display: none;");
+    endScreen.setAttribute("style", "display: block;");
+    quizPage.setAttribute("style", "display: none;");
+    document.querySelector("#userScoreEl").textContent = finalScore/1000;
+    return parseInt(finalScore/1000);
 }
 
 function countdown(){
@@ -78,7 +81,6 @@ function nextQuestion(num){
         var finalScore = endGame();
         console.log(finalScore);
         return;
-        // invoke endScreen function here!
     }
     multipleChoice.innerHTML = "";
     var currentQuestion = questions[num];
@@ -113,4 +115,33 @@ function gradeQuest(){
     }
     questionIndex++;
     nextQuestion(questionIndex);
+}
+
+function appendHighScore(){
+    console.log("the append high score function has been invoked!");
+    renderScores();
+}
+
+function renderScores(){
+    console.log("the render high scores function has been invoked!");
+}
+
+function showHighScores(){
+    startScreen.setAttribute("style", "display: none;");
+    highScores.setAttribute("style", "display: block;");
+    endScreen.setAttribute("style", "display: none;");
+    quizPage.setAttribute("style", "display: none;");
+    renderScores();
+}
+
+function clearHighScores(){
+    console.log("the clear high scores function has been invoked!");
+    renderScores();
+}
+
+function showStartScreen(){
+    startScreen.setAttribute("style", "display: block;");
+    highScores.setAttribute("style", "display: none;");
+    endScreen.setAttribute("style", "display: none;");
+    quizPage.setAttribute("style", "display: none;");
 }
