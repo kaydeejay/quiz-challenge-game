@@ -43,25 +43,22 @@ var questions = [
     }
 ];
 
-document.getElementById("startGameButton").addEventListener("click", startGame());
+document.getElementById("startGameButton").addEventListener("click", startGame);
 
 function startGame(){
-    // event.stopPropagation();
-    //hide startscreen and show quiz card
     startScreen.setAttribute("style", "display: none;");
     highScores.setAttribute("style", "display: none;");
     endScreen.setAttribute("style", "display: none;");
     quizPage.setAttribute("style", "display: block;");
     timerStart = setInterval(countdown, 1000);
     questionIndex = 0;
-    // next question function here. 
     nextQuestion(questionIndex);
 }
 
 function countdown(){
     if (timeRemaining === 0) {
         clearInterval(timerStart);
-        // endGame function here!
+        // invoke endGame function here!
     } 
     timerEl.textContent = "Time Remaining: " + (timeRemaining/1000);
     timeRemaining -= 1000;
@@ -75,43 +72,28 @@ function nextQuestion(num){
         var ansButton = document.createElement("button");
         ansButton.textContent = questions[num].choices[i];
         ansButton.setAttribute("class", "btn btn-primary");
-        ansButton.setAttribute("data-index", "i");
+        ansButton.setAttribute("data-index", i);
         multipleChoice.append(ansButton);
     }
-    // multipleChoice.addEventListener("click", gradeQuest());
+    multipleChoice.addEventListener("click", gradeQuest);
 }
 
-// function gradeQuest(){
-    // event.stopPropagation();
-    // event.preventDefault();
-    // var userAnswer = event.target;
-    // console.log(userAnswer);
-// }
-
-
-
-
+function gradeQuest(){
+    // var userAnswer = parseInt(event.target.getAttribute("data-index"));
+    // var currentAnswer = questions[questionIndex].choices.indexOf(questions[questionIndex].answer);
+    var userAnswer = event.target.textContent;
+    var currentAnswer = questions[questionIndex].answer;
+    
+    if (userAnswer === currentAnswer){
+        console.log("Correct!");
+    }
+    else {
+        console.log("something's wrong");
+    }
+}
 
 /*function endGame(){
     alert("Game over");
     clearInterval(startTimer);
-}
-
-function countdown(){
-    timer -= 1000;
-    if (timer === 0){
-        // skip straight to end screen, score = 0
-        endGame();
-        clearInterval(startTimer);
-    }
-    document.getElementById("timer").textContent = "Time Remaining: " + (timer/1000);
-}
-
-function startGame(){
-    //start timer
-    document.getElementById("timer").textContent = "Time Remaining: " + (timer/1000);
-    var startTimer = setInterval(countdown, 1000);
-    startScreen.setAttribute("style", "display: none");
-    quizPage.setAttribute("style","display: block;");    
 }
 */
