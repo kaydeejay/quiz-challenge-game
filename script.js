@@ -50,6 +50,7 @@ function startGame(){
     highScores.setAttribute("style", "display: none;");
     endScreen.setAttribute("style", "display: none;");
     quizPage.setAttribute("style", "display: block;");
+    timerEl.textContent = "Time Remaining: " + (timeRemaining/1000);
     timerStart = setInterval(countdown, 1000);
     questionIndex = 0;
     nextQuestion(questionIndex);
@@ -64,12 +65,12 @@ function endGame(){
 }
 
 function countdown(){
+    timeRemaining -= 1000;
     if (timeRemaining <= 0) {
         clearInterval(timerStart);
         endGame();
     } 
     timerEl.textContent = "Time Remaining: " + (timeRemaining/1000);
-    timeRemaining -= 1000;
 }
 
 function nextQuestion(num){
