@@ -55,16 +55,31 @@ function startGame(){
     nextQuestion(questionIndex);
 }
 
+function endGame(){
+    var finalScore = timeRemaining;
+    clearInterval(timerStart);
+    timeRemaining = 60000;
+    questionIndex = 0;
+    return finalScore;
+}
+
 function countdown(){
-    if (timeRemaining === 0) {
+    if (timeRemaining <= 0) {
         clearInterval(timerStart);
-        // invoke endGame function here!
+        endGame();
     } 
     timerEl.textContent = "Time Remaining: " + (timeRemaining/1000);
     timeRemaining -= 1000;
 }
 
 function nextQuestion(num){
+    if (questionIndex === questions.length){
+        var finalScore = endGame();
+        console.log(finalScore);
+        return;
+        // invoke endScreen function here!
+    }
+    multipleChoice.innerHTML = "";
     var currentQuestion = questions[num];
     questionTitle.textContent = currentQuestion.title;
     // generate buttons 
@@ -79,21 +94,22 @@ function nextQuestion(num){
 }
 
 function gradeQuest(){
-    // var userAnswer = parseInt(event.target.getAttribute("data-index"));
-    // var currentAnswer = questions[questionIndex].choices.indexOf(questions[questionIndex].answer);
     var userAnswer = event.target.textContent;
     var currentAnswer = questions[questionIndex].answer;
-    
+    var gradeDisplay = document.querySelector("#showResult");
     if (userAnswer === currentAnswer){
-        console.log("Correct!");
+        gradeDisplay.textContent = "Correct!";
+        setTimeout(function(){
+            gradeDisplay.textContent = "";
+        }, 1000);
     }
     else {
-        console.log("something's wrong");
+        timeRemaining -= 15000;
+        gradeDisplay.textContent = "Wrong!";
+        setTimeout(function(){
+            gradeDisplay.textContent = "";
+        }, 1000);    
     }
+    questionIndex++;
+    nextQuestion(questionIndex);
 }
-
-/*function endGame(){
-    alert("Game over");
-    clearInterval(startTimer);
-}
-*/
