@@ -41,6 +41,11 @@
     width: 20%;
 }
 
+#showResult {
+    color: red;
+    font-style: italic;
+}
+
 .end-screen {
     display: none;
 }
