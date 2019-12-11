@@ -1,5 +1,6 @@
 var startScreen = document.querySelector(".start-screen");
 var highScores = document.querySelector(".high-scores");
+var scoresList = document.querySelector("#scoresList");
 var quizPage = document.querySelector(".quiz-page");
 var endScreen = document.querySelector(".end-screen");
 var questionTitle = document.querySelector("#question");
@@ -56,15 +57,15 @@ function startGame(){
 
 function endGame(){
     clearInterval(timerStart);
-    var finalScore = timeRemaining;
+    var finalScore = parseInt(timeRemaining/1000);
     timeRemaining = 60000;
     questionIndex = 0;
     startScreen.setAttribute("style", "display: none;");
     highScores.setAttribute("style", "display: none;");
     endScreen.setAttribute("style", "display: block;");
     quizPage.setAttribute("style", "display: none;");
-    document.querySelector("#userScoreEl").textContent = finalScore/1000;
-    return parseInt(finalScore/1000);
+    document.querySelector("#userScoreEl").textContent = finalScore;
+    return finalScore;
 }
 
 function countdown(){
@@ -118,12 +119,42 @@ function gradeQuest(){
 }
 
 function appendHighScore(){
-    console.log("the append high score function has been invoked!");
+    var initials = document.querySelector("#initialInput").value;
+    var score = parseInt(document.querySelector("#userScoreEl").textContent);
+    localStorage.setItem(initials, score);
+    showHighScores();
     renderScores();
 }
 
 function renderScores(){
-    console.log("the render high scores function has been invoked!");
+    scoresList.innerHTML = "";
+    var scores = localStorage;
+    var sortableScores = [];
+    for (var initial in scores) {
+        sortableScores.push([initial, scores[initial]]);
+    }
+    var sortedScores = sortableScores.slice(0, (sortableScores.length - 6));
+    sortedScores.sort(function(a, b){
+        return b[1] - a[1];
+    });
+    var backgroundColorSelector = false;    
+    for (var i = 0; i < sortedScores.length; i++) {
+        var newInitEl = document.createElement("li");
+        var newScoreEl = document.createElement("span");
+        newInitEl.textContent = sortedScores[i][0];
+        newScoreEl.textContent = sortedScores[i][1];
+        newInitEl.append(newScoreEl);
+        newScoreEl.setAttribute("style", "float: right;");
+        if (backgroundColorSelector === false){
+            newInitEl.setAttribute("style", "background-color: #b3d9ff");
+            backgroundColorSelector = true;
+        }
+        else {
+            newInitEl.setAttribute("style", "background-color: #4da6ff");
+            backgroundColorSelector = false;
+        }
+        scoresList.append(newInitEl);
+    }
 }
 
 function showHighScores(){
@@ -135,7 +166,7 @@ function showHighScores(){
 }
 
 function clearHighScores(){
-    console.log("the clear high scores function has been invoked!");
+    localStorage.clear();
     renderScores();
 }
 

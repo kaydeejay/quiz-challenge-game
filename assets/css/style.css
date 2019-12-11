@@ -18,8 +18,27 @@
     display: none;
 }
 
+#scoresList {
+    text-align: left;
+    list-style: none;
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#scoresList li {
+    display: block;
+    padding: 0.3em 3em 0.3em 3em;
+}
+
 .quiz-page {
     display: none;
+}
+
+#multipleChoice button {
+    display: block;
+    margin: 0.5rem auto 0.5rem auto;
+    width: 20%;
 }
 
 .end-screen {
